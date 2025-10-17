@@ -121,13 +121,12 @@ plt.show()
 
 A continuación se muestra el collage que compara cada etapa del procesamiento:
 
-![Collage de resultados](output_5_0.png)
+![Collage de resultados](./Ejercicio2/output_5_0.png)
 
 ### Análisis Comparativo de Métodos
 
 | Método | Características | Mejor Uso |
 |--------|----------------|-----------|
-| **Original** | Imagen RGB original | Referencia visual |
 | **Gray** | Imagen base en escala de grises | Preprocesamiento estándar |
 | **Blur** | Suaviza detalles, reduce ruido | Eliminar artefactos antes de detección de bordes |
 | **Sharpen** | Resalta bordes y detalles finos | Mejorar definición de contornos |
@@ -153,6 +152,22 @@ A continuación se muestra el collage que compara cada etapa del procesamiento:
 
 Se implementó un sistema en tiempo real que permite ajustar parámetros de filtros mediante sliders y visualizar los resultados instantáneamente desde la cámara web.
 
+### Implementación
+
+```python
+def nothing(x):
+    pass
+
+cap = cv2.VideoCapture(0)  # Inicializar webcam
+
+# Crear ventana con controles
+cv2.namedWindow('Filtros Demo')
+cv2.createTrackbar('Blur', 'Filtros Demo', 1, 15, nothing)      # Rango: 1-15
+cv2.createTrackbar('Sharpen', 'Filtros Demo', 0, 5, nothing)    # Rango: 0-5
+cv2.createTrackbar('Sobel k', 'Filtros Demo', 1, 7, nothing)    # Rango: 1-7
+cv2.createTrackbar('Lap k', 'Filtros Demo', 1, 7, nothing)      # Rango: 1-7
+```
+
 ### Características del Sistema
 
 1. **Grid 2x2 de visualización:**
@@ -172,7 +187,22 @@ Se implementó un sistema en tiempo real que permite ajustar parámetros de filt
    Webcam → Gris → Blur → Sharpen → [Sobel / Laplacian] → Grid Display
    ```
 
-### Implementación
+### Ventajas del Sistema Interactivo
+
+- **Experimentación en tiempo real:** Permite ver inmediatamente el efecto de cada parámetro
+- **Comprensión intuitiva:** Facilita entender cómo cada filtro afecta la imagen
+- **Optimización de parámetros:** Ayuda a encontrar valores óptimos para diferentes escenarios
+- **Visualización simultánea:** Compara múltiples técnicas al mismo tiempo
+
+### Observaciones del Sistema en Tiempo Real
+
+- **Blur bajo (1-3):** Preserva detalles pero puede mostrar ruido
+- **Blur alto (11-15):** Suaviza excesivamente, puede perder bordes importantes
+- **Sharpen óptimo:** Valores 2-3 suelen dar mejor balance
+- **Sobel k pequeño (1-3):** Mayor sensibilidad pero más ruido
+- **Laplacian k mayor:** Reduce sensibilidad al ruido pero puede perder detalles finos
+
+### Código Completo del Sistema Interactivo
 
 ```python
 import cv2
@@ -184,12 +214,12 @@ def nothing(x):
 def resize_img(img, size=(150, 150)):
     return cv2.resize(img, size, interpolation=cv2.INTER_AREA)
 
-cap = cv2.VideoCapture(0)  # Inicializar webcam
+cap = cv2.VideoCapture(0)  # Webcam predeterminada
 
 cv2.namedWindow('Filtros Demo')
 cv2.resizeWindow('Filtros Demo', 200, 200)
 
-# Crear sliders
+# Sliders con rangos pequeños para más control
 cv2.createTrackbar('Blur', 'Filtros Demo', 1, 15, nothing)
 cv2.createTrackbar('Sharpen', 'Filtros Demo', 0, 5, nothing)
 cv2.createTrackbar('Sobel k', 'Filtros Demo', 1, 7, nothing)
@@ -246,21 +276,6 @@ cv2.destroyAllWindows()
 - Ajustar los sliders para experimentar con diferentes parámetros
 - Presionar `q` para salir del programa
 
-### Ventajas del Sistema Interactivo
-
-- **Experimentación en tiempo real:** Permite ver inmediatamente el efecto de cada parámetro
-- **Comprensión intuitiva:** Facilita entender cómo cada filtro afecta la imagen
-- **Optimización de parámetros:** Ayuda a encontrar valores óptimos para diferentes escenarios
-- **Visualización simultánea:** Compara múltiples técnicas al mismo tiempo
-
-### Observaciones del Sistema en Tiempo Real
-
-- **Blur bajo (1-3):** Preserva detalles pero puede mostrar ruido
-- **Blur alto (11-15):** Suaviza excesivamente, puede perder bordes importantes
-- **Sharpen óptimo:** Valores 2-3 suelen dar mejor balance
-- **Sobel k pequeño (1-3):** Mayor sensibilidad pero más ruido
-- **Laplacian k mayor:** Reduce sensibilidad al ruido pero puede perder detalles finos
-
 ---
 
 ## Conclusiones
@@ -286,6 +301,42 @@ Los diferentes métodos de detección de bordes tienen aplicaciones específicas
 - **Procesamiento de video:** Seguimiento de objetos en movimiento
 
 ---
+
+### Ejercicio 4 — Imagen = Matriz (Canales, Slicing, Histogramas)
+
+**Objetivo**  
+Manipular píxeles y regiones directamente para entender la relación entre representación matricial, canales de color y distribuciones de intensidad (histogramas). Se requiere documentar comparativas antes/después y los histogramas resultantes.
+
+**Archivos incluidos (ruta relativa)**
+- `2025-10-18-Taller2/ejercicio-4/python/ejercicio4_imagen_matriz.py`
+- `2025-10-18-Taller2/ejercicio-4/datos/input.jpg` (imagen de prueba)
+- `2025-10-18-Taller2/ejercicio-4/resultados/original_rgb.png`
+- `2025-10-18-Taller2/ejercicio-4/resultados/modified_region.png`
+- `2025-10-18-Taller2/ejercicio-4/resultados/region_comparison_histograms.png`
+- `2025-10-18-Taller2/ejercicio-4/resultados/gray_comparison_hist.png`
+
+**Cómo ejecutar**
+1. Instalar dependencias (desde la raíz del taller 2):
+```bash
+pip install -r entorno/requirements.txt
+```  
+2. Ejecutar script:
+```bash
+python 2025-10-18-Taller2/ejercicio-4/python/ejercicio4_imagen_matriz.py
+```
+
+**Evidencia incluida**
+- Comparativa imagen completa antes/después: `resultados/original_rgb.png`, `resultados/modified_region.png`
+- Histogramas por canal (antes vs después): `resultados/region_comparison_histograms.png`
+- Histogramas en escala de grises: `resultados/gray_comparison_hist.png`
+
+**Observaciones**  
+Al aplicar el ajuste de brillo/contraste en la región se observa un desplazamiento hacia valores más altos en los histogramas de los canales afectados (incremento de la media) y una ligera expansión del rango dinámico local. Esto es consistente con una operación lineal (alpha, beta) sobre los valores de intensidad.
+
+## Contribuciones Grupales
+
+- **Javier Giraldo** — Elaboración del README inicial; desarrollo y entrega del **Ejercicio 2**.
+- **Miguel Ángel** — Desarrollo y entrega del **Ejercicio 4 — Imagen = Matriz (Canales, Slicing, Histogramas)**.
 
 ## Referencias
 
