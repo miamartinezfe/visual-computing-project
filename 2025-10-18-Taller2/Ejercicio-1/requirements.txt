@@ -1,0 +1,6 @@
+pythreejs==2.4.2
+ipywidgets==8.1.1
+numpy==1.24.3
+matplotlib==3.7.1
+Pillow==10.0.0
+imageio==2.31.1
