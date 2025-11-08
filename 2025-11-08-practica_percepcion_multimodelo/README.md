@@ -7,7 +7,7 @@ Cada figura incluye la imagen con bounding boxes, el análisis de confianza y el
 
 ## Figura 1 – Análisis
 
-![Figura 1](YOLO/figs/1.jpg)
+<img src="YOLO/figs/1.jpg" alt="Figura 1" width="600">
 
 **Resumen del modelo:**
 
@@ -24,7 +24,7 @@ El modelo identifica correctamente objetos como el tenedor (`fork`) y la mesa (`
 
 ## Figura 2 – Análisis
 
-![Figura 2](YOLO/figs/2.jpg)
+<img src="YOLO/figs/2.jpg" alt="Figura 2" width="600">
 
 **Resumen del modelo:**
 
@@ -40,7 +40,7 @@ El modelo vuelve a mostrar confusión de clases. Identifica correctamente el con
 
 ## Figura 3 – Análisis
 
-![Figura 3](YOLO/figs/3.jpg)
+<img src="YOLO/figs/3.jpg" alt="Figura 3" width="600">
 
 **Resumen del modelo:**
 
@@ -56,7 +56,7 @@ El modelo detecta exitosamente al perro (`dog`), a pesar de estar en un ángulo 
 
 ## Figura 4 – Análisis
 
-![Figura 4](YOLO/figs/4.jpg)
+<img src="YOLO/figs/4.jpg" alt="Figura 4" width="600">
 
 **Resumen del modelo:**
 
@@ -72,7 +72,7 @@ Esta imagen muestra un buen rendimiento. El modelo identifica correctamente y co
 
 ## Figura 5 – Análisis
 
-![Figura 5](YOLO/figs/5.jpg)
+<img src="YOLO/figs/5.jpg" alt="Figura 5" width="600">
 
 **Resumen del modelo:**
 
