@@ -335,11 +335,11 @@ void Update()
 }
 ```
 
-## Subproyecto: Materiales, Luz y Visualización 360°
+# Subproyecto: Materiales, Luz y Visualización 360°
 
-### **Propiedades Probadas**
+## **Propiedades Probadas**
 
-#### **1. Materiales, luz y color (PBR y modelos cromáticos)**
+### **1. Materiales, luz y color (PBR y modelos cromáticos)**
 - **Texturas PBR:**
   - Propiedades: albedo, roughness, metalness.
   - Aplicación de materiales dinámicos a objetos.
@@ -350,7 +350,7 @@ void Update()
   - Uso de un script personalizado para asignar colores.
   - Animaciones que demuestran cambios en tiempo real.
 
-#### **2. Visualización de imágenes y video 360°**
+### **2. Visualización de imágenes y video 360°**
 - **Esfera invertida:**
   - Creación de una esfera con normales invertidas.
   - Uso de un shader personalizado para invertir las normales.
@@ -359,15 +359,15 @@ void Update()
   - Configuración de la cámara para explorar la imagen 360°.
 
 ---
-### **Implementación:**
+## **Implementación:**
 
-#### **1. Materiales, luz y color (PBR y modelos cromáticos)**
+### **1. Materiales, luz y color (PBR y modelos cromáticos)**
 - Se crearon materiales PBR con texturas básicas y se asignaron a objetos 3D.
 - Se configuraron luces direccionales (Key, Fill, Rim) para iluminar la escena.
 - Se implementó una paleta de colores dinámica utilizando un script personalizado.
 - Se animaron propiedades de materiales, como el color, para demostrar variaciones dinámicas.
 
-#### **5. Visualización de imágenes y video 360°**
+### **5. Visualización de imágenes y video 360°**
 - Se creó una esfera invertida para mostrar imágenes equirectangulares.
 - Se asignó un material con un shader personalizado para invertir las normales.
 - Se importó y aplicó una imagen equirectangular como textura al material.
@@ -406,8 +406,150 @@ renders/
 - **Miguel Martinez** — Organización del repositorio inicial, desarrollo de los puntos 1 (Materiales, luz y color) y 5 (Visualización de imágenes y video 360°).
 
 ---
+## Subproyecto: SnakeVision - Control Gestual Intuitivo
 
-## Reflexión final
+### Tecnologías Implementadas
+
+- **Python 3.8+**: Lenguaje de programación principal
+- **OpenCV**: Procesamiento de imágenes y video en tiempo real
+- **MediaPipe Hands**: Detección y seguimiento de landmarks de manos
+- **NumPy**: Operaciones matemáticas y manejo de arrays
+- **Conda**: Gestión de entorno y dependencias
+
+### Descripción
+
+SnakeVision es una implementación moderna del clásico juego Snake, donde el control se realiza mediante gestos de mano detectados por una cámara web. El proyecto combina visión por computadora con gaming tradicional, creando una experiencia de juego inmersiva y natural.
+
+**Características principales:**
+- Control gestual intuitivo sin hardware adicional
+- Interfaz dividida: cámara en tiempo real + juego
+- Sistema de puntuación con crecimiento progresivo
+- Detección robusta de gestos con feedback visual
+- Mecánicas de juego optimizadas para control gestual
+
+### Códigos Destacados
+
+#### 1. Sistema de Detección de Gestos (`hand_gesture_controller.py`)
+
+```python
+def get_gesture(self, fingers):
+    """Convierte el conteo de dedos en gestos para el juego"""
+    count = sum(fingers)
+    
+    if count == 0:  # Puño cerrado
+        return "STOP"
+    elif count == 1 and fingers[1] == 1:  # Solo índice
+        return "UP"
+    elif count == 2 and fingers[1] == 1 and fingers[2] == 1:  # Índice y medio
+        return "RIGHT"
+    # ... más gestos
+```
+
+**Importancia**: Este algoritmo traduce la configuración de dedos en comandos de juego, usando landmarks específicos de MediaPipe para determinar qué dedos están extendidos.
+
+#### 2. Lógica Principal del Juego (`snake_game.py`)
+
+```python
+def update(self, gesture):
+    # Control de velocidad
+    current_time = time.time()
+    if current_time - self.last_update_time < self.game_speed:
+        return
+        
+    # Mecánica de crecimiento al comer
+    if new_head == self.food:
+        self.score += 1
+        self.food = self.generate_food()
+        # NO remover la cola - la serpiente crece
+    else:
+        self.snake.pop()  # Solo remover cola si no comió
+```
+
+**Importancia**: Implementa el núcleo del juego con control de velocidad optimizado y la mecánica clave de crecimiento de la serpiente.
+
+#### 3. Integración y Visualización (`main.py`)
+
+```python
+# Procesamiento en tiempo real
+annotated_frame, gesture = gesture_controller.process_frame(frame_resized)
+snake_game.update(gesture)
+
+# Interfaz dividida 1/3 - 2/3
+combined_canvas = np.zeros((combined_height, combined_width, 3), dtype=np.uint8)
+combined_canvas[cam_y_offset:cam_y_offset + target_cam_height, 0:target_cam_width] = annotated_frame
+snake_game.draw(combined_canvas, x_offset=game_x_offset, y_offset=game_y_offset)
+```
+
+**Importancia**: Coordina todos los componentes y gestiona la interfaz de usuario unificada.
+
+### Manejo de los Gestos
+
+#### Mapeo Gestual → Comandos
+
+| Gesto | Dedos | Comando | Función |
+|-------|-------|---------|---------|
+| 🖐️ Mano abierta | 5 dedos | `START` | Iniciar/Reiniciar juego |
+| ☝️ Solo índice | 1 dedo | `UP` | Mover hacia arriba |
+| ✌️ Índice + medio | 2 dedos | `RIGHT` | Mover hacia derecha |
+| 🤟 Índice + medio + anular | 3 dedos | `DOWN` | Mover hacia abajo |
+| 🖖 4 dedos | 4 dedos | `LEFT` | Mover hacia izquierda |
+| ✊ Puño cerrado | 0 dedos | `STOP` | Pausar juego |
+| ✊ × 3 segundos | 0 dedos (hold) | `EXIT` | Salir del juego |
+
+#### Algoritmo de Detección
+
+1. **Detección de Landmarks**: MediaPipe identifica 21 puntos clave por mano
+2. **Análisis de Posición**: Compara posiciones y-axis entre puntas y articulaciones
+3. **Clasificación de Gestos**: Cuenta dedos extendidos y mapea a comandos
+4. **Suavizado**: Evita cambios bruscos manteniendo estado anterior
+
+### Evidencias
+
+Se evidencia el uso de los gestos tal como se observa a continuación:
+![python1](Python/evidencias/game.gif)
+![python2](Python/evidencias/game2.gif)
+
+El video completo se puede ver desde el documento 
+**Ejemplos de evidencias a incluir:**
+- Captura de pantalla mostrando la interfaz dividida
+- GIF demostrando el control gestual en acción
+- Secuencia de gestos reconocidos por el sistema
+- Ejemplo de gameplay con aumento de puntuación
+
+### Conclusiones
+
+#### Logros del Proyecto
+
+1. **Control Intuitivo**: Se logró un sistema de control gestual natural que no requiere aprendizaje complejo
+2. **Precisión en Detección**: MediaPipe provee detección robusta incluso en diferentes condiciones de iluminación
+3. **Rendimiento Optimizado**: El juego mantiene 60 FPS mientras procesa video en tiempo real
+4. **Experiencia de Usuario**: La interfaz dividida permite verificar gestos mientras se juega
+
+#### Desafíos Superados
+
+- **Sincronización**: Coordinar la velocidad de detección con la velocidad del juego
+- **Calibración**: Ajustar sensibilidad para evitar detecciones falsas
+- **Feedback Visual**: Proporcionar información clara sobre gestos detectados
+
+#### Aplicaciones Futuras
+
+El framework desarrollado puede extenderse para:
+- Control de otras aplicaciones mediante gestos
+- Sistemas de rehabilitación con terapia gestual
+- Interfaces para personas con movilidad reducida
+- Juegos más complejos con vocabulario gestual expandido
+
+#### Impacto Tecnológico
+
+SnakeVision demuestra que es posible crear experiencias interactivas completas usando únicamente visión por computadora, eliminando la necesidad de controladores físicos y abriendo posibilidades para interfaces más naturales e inclusivas.
+
+#### Uso de IA
+Se implementó *Deepseek* principalmente para el desarrollo de la documentación.
+
+
+---
+
+# Reflexión final
 
 Este taller integra todos los componentes explorados durante el curso, conectando **percepción, interacción y visualización avanzada**.
 El trabajo consolida una comprensión práctica del pipeline gráfico moderno, resaltando la importancia del diseño sensorial, la respuesta visual coherente y la documentación técnica reproducible.
