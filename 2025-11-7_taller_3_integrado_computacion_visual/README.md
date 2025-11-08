@@ -546,6 +546,9 @@ SnakeVision demuestra que es posible crear experiencias interactivas completas u
 #### Uso de IA
 Se implementó *Deepseek* principalmente para el desarrollo de la documentación.
 
+### Aporte
+Realizado por Javier Santiago Giraldo Jiménez
+
 
 ---
 
