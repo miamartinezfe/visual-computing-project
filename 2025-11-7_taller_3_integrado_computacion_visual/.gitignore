@@ -1,0 +1,72 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build outputs
+dist/
+build/
+*.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Testing
+coverage/
+.nyc_output/
+
+# Videos and large media files
+*.mov
+*.mp4
+*.avi
+*.mkv
+*.webm
+
+# Temporary files
+*.tmp
+.cache/
+
+# Lock files (optional - descomenta si quieres ignorarlos)
+# package-lock.json
+# yarn.lock
+
+# Python virtual environments
+python/env/
+python/venv/
+python/.venv/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Python renders (mantener solo los finales)
+# python/renders/*.png
