@@ -1,6 +1,6 @@
 # Taller 3 — Taller Integral de Computación Visual
 **Fecha:** 2025-11-07  
-**Integrantes:** Javier Giraldo, Miguel Martinez, Brayan Rubiano
+**Integrantes:** Javier Giraldo, Miguel Martinez, Brayan Rubiano, Jesús Quiñones.
 
 ---
 
