@@ -1,3 +1,9 @@
+# Práctica de Percepción Multimodal
+
+## Introducción
+Este proyecto integra modelos de detección y segmentación para analizar imágenes. Utiliza YOLO para detección de objetos y SAM (Segment Anything Model) para segmentación basada en bounding boxes y prompts de puntos.
+
+---
 # 1. YOLO – Resultados de Detección
 
 Este documento presenta las predicciones realizadas con **YOLO11 (Ultralytics)** sobre cinco imágenes capturadas para el laboratorio de detección base.
@@ -99,6 +105,9 @@ Esto sugiere que el modelo carece de granularidad en sus clases para estos casos
 El modelo genera detecciones incorrectas (falsos positivos) con puntuaciones de confianza que no son lo suficientemente bajas como para ser descartadas automáticamente.
 * **Ejemplo (Figura 3):** Un objeto oscuro en primer plano es identificado como `laptop` con una confianza de 0.64. Esto es problemático, ya que un umbral de confianza estándar (como 0.5) no filtraría este error, introduciendo "ruido" en las detecciones.
 
+---
+
+
 # 3. MiDaS
 
 ## Resumen
@@ -150,4 +159,81 @@ Para traducir la profundidad relativa a una métrica accionable, se siguió este
 
 - Naturaleza Relativa de MiDaS: La salida es solo relativa (disparidad). La clasificación Cerca/Medio/Lejos es válida solo en el contexto de la escena actual y no se traduce directamente a distancias en metros.
 
+---
 
+## Punto 4: SAM - Segmentación por Prompts
+
+### Introducción
+El objetivo de este punto es realizar una segmentación comparativa utilizando dos tipos de prompts:
+1. **Prompts de bounding boxes** generados por YOLO.
+2. **Prompts de puntos** definidos manualmente o automáticamente.
+
+Esta comparación permite evaluar las fortalezas y limitaciones de cada enfoque en términos de precisión y flexibilidad.
+
+### Metodología
+1. **Detección inicial:**
+    - Utilizar YOLO para detectar objetos y generar bounding boxes.
+2. **Segmentación con prompts de bounding boxes:**
+    - Usar las bounding boxes como entrada para SAM.
+3. **Segmentación con prompts de puntos:**
+    - Definir puntos clave en las imágenes y usarlos como entrada para SAM.
+4. **Evaluación comparativa:**
+    - Calcular métricas IoU para ambos métodos.
+    - Generar visualizaciones comparativas.
+
+### Resultados Comparativos
+#### Métricas IoU
+--- IoU Scores Summary ---
+- **Imagen:** download (1).jpeg
+    - Objeto 1: IoU = 0.5360
+- **Imagen:** download (2).jpeg
+    - Objeto 1: IoU = 0.2994
+- **Imagen:** download (3).jpeg
+    - Objeto 1: IoU = 0.9799
+    - Objeto 2: IoU = 0.9959
+    - Objeto 3: IoU = 0.9333
+- **Imagen:** download (4).jpeg
+    - Objeto 1: IoU = 0.0426
+    - Objeto 2: IoU = 0.3505
+- **Imagen:** download.jpeg
+    - Objeto 1: IoU = 0.2755
+
+#### Visualizaciones Comparativas
+Las imágenes generadas se encuentran en el directorio `results/comparativas/`:
+- `comparativa_download (1).jpeg`: Muestra diferencias significativas en bordes difusos.
+- `comparativa_download (2).jpeg`: Ejemplo de bajo IoU con prompts de puntos.
+- `comparativa_download (3).jpeg`: Ejemplo de alto IoU con ambos métodos.
+- `comparativa_download (4).jpeg`: Ilustra las limitaciones de bounding boxes en objetos pequeños.
+- `comparativa_download.jpeg`: Caso con IoU moderado.
+
+### Código Python
+El código utilizado para realizar la segmentación y calcular las métricas IoU se encuentra en el archivo `practica_sam.py`, ubicado en /colab_links. Este archivo incluye:
+- Implementación de la segmentación con SAM utilizando bounding boxes y prompts de puntos.
+- Cálculo de métricas IoU para evaluar la precisión de las máscaras generadas.
+- Generación de las imágenes comparativas almacenadas en el directorio `results/comparativas/`.
+
+### Referencias a Imágenes
+Las imágenes generadas durante la práctica se encuentran organizadas en el directorio `results/comparativas/`. Estas imágenes muestran las máscaras generadas por SAM utilizando los dos tipos de prompts y permiten una comparación visual de los resultados.
+
+- **Ejemplo de imágenes generadas:**
+  - `comparativa_download (1).jpeg`: Muestra diferencias significativas en bordes difusos.
+  - `comparativa_download (2).jpeg`: Ejemplo de bajo IoU con prompts de puntos.
+  - `comparativa_download (3).jpeg`: Ejemplo de alto IoU con ambos métodos.
+  - `comparativa_download (4).jpeg`: Ilustra las limitaciones de bounding boxes en objetos pequeños.
+  - `comparativa_download.jpeg`: Caso con IoU moderado.
+
+Para más detalles sobre cómo ejecutar el código y generar estos resultados, consulta las instrucciones en el archivo `segmentacion_practica.py`.
+
+### Análisis Comparativo
+- **Bounding Boxes:**
+    - Generan máscaras precisas cuando los objetos están claramente delimitados.
+    - Limitaciones: En objetos con bordes difusos, las máscaras pueden ser menos precisas.
+    - Ejemplo: En `comparativa_download (4).jpeg`, los objetos pequeños no se segmentan correctamente.
+- **Prompts de Puntos:**
+    - Más flexibles para ajustar la segmentación en áreas específicas.
+    - Limitaciones: Requieren puntos bien definidos para obtener buenos resultados.
+    - Ejemplo: En `comparativa_download (2).jpeg`, los puntos mal colocados generan un IoU bajo.
+
+En general, los prompts de bounding boxes son más adecuados para objetos grandes y bien definidos, mientras que los prompts de puntos ofrecen mayor flexibilidad en casos complejos.
+
+---

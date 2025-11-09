@@ -1,0 +1,10 @@
+ultralytics
+opencv-python
+matplotlib
+numpy
+torch
+torchvision
+torchaudio
+segment-anything
+scikit-image
+
