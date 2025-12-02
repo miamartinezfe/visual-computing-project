@@ -1,0 +1,11 @@
+.app {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: transparent; /* Ensure app doesn't block video */
+}
+
+.canvas-container {
+  width: 100%;
+  height: 100%;
+}

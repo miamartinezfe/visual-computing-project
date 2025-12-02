@@ -1,0 +1,50 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  background: transparent !important; /* Must be transparent to see video */
+}
+
+body {
+  background: #000; /* Black background when AR is off */
+}
+
+/* AR.js video styling - ensure video is behind canvas */
+video {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  object-fit: cover !important;
+  z-index: 1 !important; /* Behind canvas (z-index 10) */
+  display: block !important;
+}
+
+/* Hide AR.js default canvas (we use our own Three.js canvas) */
+canvas:not([data-engine="three.js r168"]) {
+  display: none !important;
+}
+
+/* Ensure our Three.js canvas is visible and on top of video */
+canvas[data-engine="three.js r168"] {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  z-index: 10 !important;
+  pointer-events: auto !important;
+}
