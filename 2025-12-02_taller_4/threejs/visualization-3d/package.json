@@ -1,0 +1,39 @@
+{
+  "name": "visualization-3d",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+  },
+  "dependencies": {
+    "@ar-js-org/ar.js": "^3.4.7",
+    "@react-three/drei": "^9.114.3",
+    "@react-three/fiber": "^8.15.19",
+    "@react-three/postprocessing": "^2.19.1",
+    "ar.js": "^2.2.2",
+    "leva": "^0.9.35",
+    "postprocessing": "^6.38.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "stats.js": "^0.17.0",
+    "three": "^0.168.0",
+    "zustand": "^4.5.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@types/three": "^0.168.0",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "@vitejs/plugin-react": "^4.3.3",
+    "eslint": "^8.57.1",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.12",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10"
+  }
+}
