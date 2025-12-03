@@ -1,4 +1,4 @@
-# Detección y Segmentación Funcional
+# Detección y Segmentación Funcional - Javier Giraldo
 
 Taller 4 - Computación Visual Avanzada
 
