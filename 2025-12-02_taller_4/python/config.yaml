@@ -1,0 +1,77 @@
+# Detection and Segmentation Configuration
+
+# Model Settings
+models:
+  yolo:
+    model_name: "yolov8n.pt"  # Options: yolov8n, yolov8s, yolov8m, yolov8l, yolov8x
+    confidence: 0.5
+    iou_threshold: 0.45
+    max_detections: 100
+    device: "cuda"  # cuda or cpu
+    
+  sam:
+    model_type: "vit_b"  # Options: vit_h, vit_l, vit_b
+    checkpoint: "sam_vit_b_01ec64.pth"
+    device: "cuda"  # cuda or cpu
+    points_per_side: 32
+    pred_iou_thresh: 0.88
+    stability_score_thresh: 0.95
+
+# Input/Output Settings
+io:
+  input_dir: "data/input"
+  output_dir: "data/output"
+  models_dir: "data/models"
+  results_dir: "results"
+  
+# Video Processing
+video:
+  fps: 30
+  resolution: [1280, 720]  # width, height
+  codec: "mp4v"
+  process_every_n_frames: 1  # Process every nth frame for speed
+  max_frames: null  # null for all frames, or set a limit
+
+# Visualization
+visualization:
+  show_labels: true
+  show_confidence: true
+  show_masks: true
+  bbox_thickness: 2
+  font_scale: 0.6
+  colors:
+    bbox: [0, 255, 0]  # Green
+    text: [255, 255, 255]  # White
+    mask_alpha: 0.5
+
+# API Settings
+api:
+  host: "0.0.0.0"
+  port: 5000
+  debug: true
+  upload_folder: "data/input"
+  max_file_size: 100  # MB
+
+# Performance Settings
+performance:
+  batch_size: 1
+  num_workers: 4
+  prefetch_factor: 2
+  
+# Metrics
+metrics:
+  calculate_fps: true
+  calculate_latency: true
+  log_detections: true
+  export_format: "csv"  # csv or json
+
+# Classes to detect (COCO dataset)
+# Set to null to detect all classes, or provide list of class indices
+# Example: [0, 1, 2] for person, bicycle, car
+target_classes: null
+
+# Logging
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  file: "detection_segmentation.log"
+  console: true
