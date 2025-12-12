@@ -1,0 +1,11 @@
+{
+    "asset": "b225ea20594cea24fa0fcfb359eaf686",
+    "fileName": "019b109f-f88d-7727-b5db-09586f947234_Preview.png",
+    "prompt": "liver",
+    "negativePrompt": "",
+    "model": "44ec3749-963a-44b1-aa54-dc19f6ed8ab2",
+    "modelName": "Unity Texture2D",
+    "customSeed": 758818655,
+    "w3CTraceId": "1411cd50f12a0b327749dc713812d237",
+    "refinementMode": "Generation"
+}

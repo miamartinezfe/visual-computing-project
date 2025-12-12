@@ -1,0 +1,11 @@
+{
+    "asset": "5fcf531b479f0c64bb1ddfa6febb0474",
+    "fileName": "019b10ad-d8ab-78fc-9cf8-7a3acef7358b_Preview.png",
+    "prompt": "human large intestine",
+    "negativePrompt": "",
+    "model": "44ec3749-963a-44b1-aa54-dc19f6ed8ab2",
+    "modelName": "Unity Texture2D",
+    "customSeed": 1659379251,
+    "w3CTraceId": "306a46f8d59dc957538b21ef6ba34c55",
+    "refinementMode": "Generation"
+}

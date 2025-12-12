@@ -1,0 +1,11 @@
+{
+    "asset": "4dd6b3fd27febb040a743fda1fa976c2",
+    "fileName": "019b10bc-6cda-7638-9cd7-b5e2f5f40a2a_Preview.png",
+    "prompt": "lung",
+    "negativePrompt": "",
+    "model": "44ec3749-963a-44b1-aa54-dc19f6ed8ab2",
+    "modelName": "Unity Texture2D",
+    "customSeed": 1470100645,
+    "w3CTraceId": "f0c3506212aad3ecd287ac96c4115473",
+    "refinementMode": "Generation"
+}
